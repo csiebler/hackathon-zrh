@@ -4,6 +4,8 @@
     .header
       %h1 Picture Viewer with a remote Webcam
     .content
-      %a(href="/take_photo")> Take new photo
+      - @ips.each do |ip|
+        %a(href="/take_photo/#{ip}")> Take new photo on Raspberry #{ip}
+        %br
     .footer
-      %p AMS Hackathon 2016
+      %p ZRH Hackathon 2016

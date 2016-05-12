@@ -14,7 +14,7 @@ Note: IP addresses and credentials are hardcoded and need to be changed before b
 ### webservice
 
 * `docker build .` builds the container
-* `docker run -p 8080:8080 <image_id>` runs the container
+* `docker run --rm -p 8080:8080 <image_id>` runs the container
 * `docker ps` lists all running containers
 * `docker stop <id>` stops an running container
 
@@ -31,7 +31,7 @@ However, you will need to have the following gems installed:
 ### webclient
 
 * `docker build .` builds the container
-* `docker run -p 8081:8081 <image_id>` runs the container
+* `docker run --rm -p 8081:8081 <image_id>` runs the container
 * `docker ps` lists all running containers
 * `docker stop <id>` stops an running container
 

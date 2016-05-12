@@ -4,6 +4,7 @@ MAINTAINER Clemens Siebler <clemens.siebler@gmail.com>
 RUN gem install sinatra
 RUN gem install shotgun
 RUN gem install aws-sdk
+RUN gem install elasticsearch
 
 RUN mkdir /sinatra
 COPY webservice.rb /sinatra
