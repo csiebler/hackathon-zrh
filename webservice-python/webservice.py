@@ -17,7 +17,14 @@ S3_SECRET_KEY = 'DI/7+RyiQXtGM5yQhEoaouMX+phAZmXktvK6ctuN'
 S3_ENDPOINT = 'https://10.65.57.176:8082'
 BUCKET = 'camera0'
 
+# Comment out the appropriate one; raspistill is native camera fsweb is usb camera
+#COMMAND = 'fswebcam -r 640x480 --jpeg 85 --delay 1 '
+COMMAND = 'raspistill -hf -vf -o '
+
 class TakePhotoAPI(Resource):
+
+	def get(self):
+		return self.post()
 
 	def post(self):
 		# Maybe do something with post variables later...
@@ -35,7 +42,8 @@ class TakePhotoAPI(Resource):
 			os.remove(filename)
 			filename += '.jpg'
 		else:
-			os.system('fswebcam -r 640x480 --jpeg 85 --delay 1 ' + filename + '.jpg')
+			filename += '.jpg'
+			os.system(COMMAND + filename)
 
 		# Upload to S3
 		session = boto3.session.Session(aws_access_key_id=S3_ACCESS_KEY, aws_secret_access_key=S3_SECRET_KEY)
