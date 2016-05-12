@@ -37,7 +37,7 @@ get "/take_photo" do
   #log information into elasticsearch
   ip_address = Socket.ip_address_list[1].ip_address
   ts = DateTime.now.strftime('%Q').to_i
-  $es.index index: 'raspberries', type: 'ip_info', body: { ip_address: ip_address, timestamp: ts }
+  $es.index index: 'raspberries', type: 'ip_info', id: ip_address, body: { timestamp: ts }
 
   {:message => "Took photo with camera", :image_url => image_url}.to_json
 end
