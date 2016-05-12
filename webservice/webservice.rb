@@ -3,9 +3,13 @@ require 'json'
 require 'aws-sdk'
 require 'securerandom'
 
-$endpoint = 'https://10.65.57.176:8082'
+# Modify this section
+$endpoint = 'https://****STORAGEGRID HOSTNAME/IP****:8082'
+$bucket_name = '****YOUR BUCKET NAME****'
+access_key = '****ACCESS KEY****'
+secret_access_key = '****SECRET ACCESS KEY****'
 
-cred = Aws::Credentials.new('YSBDCQOZGH5NUG355HQY', 'DI/7+RyiQXtGM5yQhEoaouMX+phAZmXktvK6ctuN')
+cred = Aws::Credentials.new(access_key, secret_access_key)
 $client = Aws::S3::Client.new(region: 'us-east-1', endpoint: $endpoint, credentials: cred, force_path_style: true, ssl_verify_peer: false)
 
 get "/" do
@@ -15,12 +19,13 @@ end
 
 get "/take_photo" do
   content_type :json
-  bucket = "camera0"
+  bucket = $bucket_name
   image_url = write_webcam_image_to_s3(bucket)
   {:message => "Took photo with camera", :image_url => image_url}.to_json
 end
 
 def write_webcam_image_to_s3(bucket)
+  # Create random name for image
   image_name = SecureRandom.hex(32) + ".jpg";
   
   # Take picture and store it as image_name
@@ -38,5 +43,7 @@ def write_webcam_image_to_s3(bucket)
 
   # Delete temporary image file from disk
   File.delete(image_file)
+
+  # return full URL of image
   $endpoint + "/" + bucket + "/" + image_name
 end
